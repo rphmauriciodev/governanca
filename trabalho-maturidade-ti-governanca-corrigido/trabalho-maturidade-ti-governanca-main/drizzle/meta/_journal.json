@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1774790359841,
+      "tag": "0000_faithful_komodo",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1774790526530,
+      "tag": "0001_unknown_hellcat",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1774790572457,
+      "tag": "0002_regular_cannonball",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1774914768982,
+      "tag": "0003_unique_valeria_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1776820283718,
+      "tag": "0004_flimsy_magik",
+      "breakpoints": true
+    }
+  ]
+}

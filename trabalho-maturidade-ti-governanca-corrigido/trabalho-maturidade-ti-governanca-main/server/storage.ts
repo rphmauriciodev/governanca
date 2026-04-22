@@ -1,0 +1,133 @@
+import { ENV } from './_core/env';
+import fs from 'fs';
+import path from 'path';
+
+type StorageConfig = { baseUrl: string; apiKey: string };
+
+function getStorageConfig(): StorageConfig | null {
+  const baseUrl = ENV.forgeApiUrl;
+  const apiKey = ENV.forgeApiKey;
+
+  if (!baseUrl || !apiKey) {
+    return null;
+  }
+
+  return { baseUrl: baseUrl.replace(/\/+$/, ""), apiKey };
+}
+
+function buildUploadUrl(baseUrl: string, relKey: string): URL {
+  const url = new URL("v1/storage/upload", ensureTrailingSlash(baseUrl));
+  url.searchParams.set("path", normalizeKey(relKey));
+  return url;
+}
+
+async function buildDownloadUrl(
+  baseUrl: string,
+  relKey: string,
+  apiKey: string
+): Promise<string> {
+  const downloadApiUrl = new URL(
+    "v1/storage/downloadUrl",
+    ensureTrailingSlash(baseUrl)
+  );
+  downloadApiUrl.searchParams.set("path", normalizeKey(relKey));
+  const response = await fetch(downloadApiUrl, {
+    method: "GET",
+    headers: buildAuthHeaders(apiKey),
+  });
+  const data = await response.json();
+  return data.url;
+}
+
+function ensureTrailingSlash(value: string): string {
+  return value.endsWith("/") ? value : `${value}/`;
+}
+
+function normalizeKey(relKey: string): string {
+  return relKey.replace(/^\/+/, "");
+}
+
+function toFormData(
+  data: Buffer | Uint8Array | string,
+  contentType: string,
+  fileName: string
+): FormData {
+  const blob =
+    typeof data === "string"
+      ? new Blob([data], { type: contentType })
+      : new Blob([data as any], { type: contentType });
+  const form = new FormData();
+  form.append("file", blob, fileName || "file");
+  return form;
+}
+
+function buildAuthHeaders(apiKey: string): HeadersInit {
+  return { Authorization: `Bearer ${apiKey}` };
+}
+
+export async function storagePut(
+  relKey: string,
+  data: Buffer | Uint8Array | string,
+  contentType = "application/octet-stream"
+): Promise<{ key: string; url: string }> {
+  const config = getStorageConfig();
+  const key = normalizeKey(relKey);
+
+  // Tentativa de upload via API (Nuvem)
+  if (config) {
+    try {
+      const { baseUrl, apiKey } = config;
+      const uploadUrl = buildUploadUrl(baseUrl, key);
+      const formData = toFormData(data, contentType, key.split("/").pop() ?? key);
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        headers: buildAuthHeaders(apiKey),
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        return { key, url: result.url };
+      }
+    } catch (e) {
+      console.warn("[Storage] Remote upload failed, falling back to local storage:", e);
+    }
+  }
+
+  // Fallback: Armazenamento Local (Pastas do projeto)
+  console.log(`[Storage] Saving ${key} to local storage...`);
+  const publicPath = path.join(process.cwd(), "client", "public", "storage");
+  const filePath = path.join(publicPath, key);
+  const dirPath = path.dirname(filePath);
+
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+
+  fs.writeFileSync(filePath, data as any);
+  
+  // A URL local será acessível via /storage/caminho-do-arquivo
+  const localUrl = `/storage/${key}`;
+  return { key, url: localUrl };
+}
+
+export async function storageGet(relKey: string): Promise<{ key: string; url: string; }> {
+  const config = getStorageConfig();
+  const key = normalizeKey(relKey);
+
+  if (config) {
+    try {
+      return {
+        key,
+        url: await buildDownloadUrl(config.baseUrl, key, config.apiKey),
+      };
+    } catch (e) {
+      // Fallback para URL local
+    }
+  }
+
+  return {
+    key,
+    url: `/storage/${key}`,
+  };
+}
