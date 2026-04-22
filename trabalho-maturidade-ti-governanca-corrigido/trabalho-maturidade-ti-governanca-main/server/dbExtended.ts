@@ -1,11 +1,11 @@
-import { getDb } from "./db";
+import { getDb } from './db.js';
 import {
   assessmentResults,
   actionPlans,
   accessLogs,
   assessmentHistory,
   categories,
-} from "../drizzle/schema";
+} from '../drizzle/schema.js';
 import { eq, desc } from "drizzle-orm";
 
 /**

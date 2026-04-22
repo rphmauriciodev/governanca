@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scoreToMaturityLevel, getMaturityLevelDescription, getRecommendations } from "./scoreCalculator";
+import { scoreToMaturityLevel, getMaturityLevelDescription, getRecommendations } from './scoreCalculator.js';
 
 describe("Score Calculator", () => {
   describe("scoreToMaturityLevel", () => {

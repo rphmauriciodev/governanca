@@ -1,4 +1,4 @@
-import { getAssessmentAnswers, getAllCategories, getQuestionsByCategoryId } from "./db";
+import { getAssessmentAnswers, getAllCategories, getQuestionsByCategoryId } from './db.js';
 
 export interface CategoryScore {
   categoryId: number;

@@ -1,4 +1,4 @@
-import { ENV } from './_core/env';
+import { ENV } from './_core/env.js';
 import fs from 'fs';
 import path from 'path';
 

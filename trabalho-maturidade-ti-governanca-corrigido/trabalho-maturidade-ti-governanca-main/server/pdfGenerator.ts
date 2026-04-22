@@ -1,12 +1,12 @@
-import { invokeLLM } from "./_core/llm";
-import { storagePut } from "./storage";
+import { invokeLLM } from './_core/llm.js';
+import { storagePut } from './storage.js';
 import {
   getAssessmentResult,
   getAssessmentById,
   getCompanyById,
   getAllCategories,
-} from "./db";
-import { getMaturityLevelDescription, getRecommendations } from "./scoreCalculator";
+} from './db.js';
+import { getMaturityLevelDescription, getRecommendations } from './scoreCalculator.js';
 
 export interface PDFGenerationInput {
   assessmentId: number;
