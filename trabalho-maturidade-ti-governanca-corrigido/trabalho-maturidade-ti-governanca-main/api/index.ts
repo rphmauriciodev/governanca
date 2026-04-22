@@ -7,7 +7,7 @@ import { registerOAuthRoutes } from "../server/_core/oauth";
 import { registerLocalAuthRoutes } from "../server/_core/localAuth";
 import { appRouter } from "../server/routers";
 import { createContext } from "../server/_core/context";
-import { serveStatic, setupVite } from "../server/_core/vite";
+import { serveStatic } from "../server/_core/vite";
 
 async function getApp() {
   const app = express();
