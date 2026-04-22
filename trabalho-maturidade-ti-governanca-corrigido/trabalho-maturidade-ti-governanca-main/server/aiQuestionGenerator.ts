@@ -1,5 +1,5 @@
-import { invokeLLM } from './_core/llm.js';
-import { createQuestion, getCategoryById } from './db.js';
+import { invokeLLM } from './_core/llm';
+import { createQuestion, getCategoryById } from './db';
 
 /**
  * Framework definitions for IT maturity assessment

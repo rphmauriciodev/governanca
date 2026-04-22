@@ -1,9 +1,9 @@
 import express from "express";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from '../server/_core/oauth.js.js';
-import { registerLocalAuthRoutes } from '../server/_core/localAuth.js.js';
-import { appRouter } from '../server/routers.js.js';
-import { createContext } from '../server/_core/context.js.js';
+import { registerOAuthRoutes } from '../server/_core/oauth';
+import { registerLocalAuthRoutes } from '../server/_core/localAuth';
+import { appRouter } from '../server/routers';
+import { createContext } from '../server/_core/context';
 
 // Cache do app para evitar recriar em cada requisição na Vercel
 let appCache: any = null;

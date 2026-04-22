@@ -1,8 +1,8 @@
-import { COOKIE_NAME, ONE_YEAR_MS } from '../../shared/const.js';
+import { COOKIE_NAME, ONE_YEAR_MS } from '../../shared/const';
 import type { Express, Request, Response } from "express";
-import * as db from '../db.js';
-import { getSessionCookieOptions } from './cookies.js';
-import { sdk } from './sdk.js';
+import * as db from '../db';
+import { getSessionCookieOptions } from './cookies';
+import { sdk } from './sdk';
 
 /**
  * Registra rotas de autenticação local (sem OAuth externo).

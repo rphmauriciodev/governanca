@@ -1,7 +1,7 @@
-import { COOKIE_NAME } from '../shared/const.js';
-import { getSessionCookieOptions } from './_core/cookies.js';
-import { systemRouter } from './_core/systemRouter.js';
-import { publicProcedure, router, protectedProcedure } from './_core/trpc.js';
+import { COOKIE_NAME } from '../shared/const';
+import { getSessionCookieOptions } from './_core/cookies';
+import { systemRouter } from './_core/systemRouter';
+import { publicProcedure, router, protectedProcedure } from './_core/trpc';
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
@@ -36,16 +36,16 @@ import {
   getUserNotifications,
   createPdfReport,
   getPdfReportByAssessmentId,
-} from './db.js';
-import { generateAssessmentPDF } from './pdfGenerator.js';
-import { calculateAssessmentScore } from './scoreCalculator.js';
-import { sendEmailNotification } from './emailNotifications.js';
+} from './db';
+import { generateAssessmentPDF } from './pdfGenerator';
+import { calculateAssessmentScore } from './scoreCalculator';
+import { sendEmailNotification } from './emailNotifications';
 import {
   generateQuestionsWithAI,
   analyzeAnswersWithAI,
   generateRecommendationsWithAI,
   MATURITY_FRAMEWORKS,
-} from './aiQuestionGenerator.js';
+} from './aiQuestionGenerator';
 import {
   saveAIRecommendationsAndGaps,
   getAIRecommendationsAndGaps,
@@ -55,12 +55,12 @@ import {
   logUserAccess,
   saveAssessmentToHistory,
   getCompanyAssessmentHistory,
-} from './dbExtended.js';
+} from './dbExtended';
 import {
   calculateMaturityGaps,
   getMaturityRecommendations,
   getAllCobitDomains,
-} from './cobitFramework.js';
+} from './cobitFramework';
 
 /**
  * Admin-only procedure - restricts access to admin users

@@ -1,9 +1,9 @@
-import { COOKIE_NAME, ONE_YEAR_MS } from '../../shared/const.js';
+import { COOKIE_NAME, ONE_YEAR_MS } from '../../shared/const';
 import type { Express, Request, Response } from "express";
-import * as db from '../db.js';
-import { getSessionCookieOptions } from './cookies.js';
-import { sdk } from './sdk.js';
-import { ENV } from './env.js';
+import * as db from '../db';
+import { getSessionCookieOptions } from './cookies';
+import { sdk } from './sdk';
+import { ENV } from './env';
 
 export function registerOAuthRoutes(app: any) {
   // Rota para iniciar o login com Google

@@ -1,4 +1,4 @@
-import { notifyOwner } from './_core/notification.js';
+import { notifyOwner } from './_core/notification';
 
 export interface EmailNotificationData {
   recipientEmail: string;

@@ -1,12 +1,12 @@
-import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS } from '../../shared/const.js';
-import { ForbiddenError } from '../../shared/_core/errors.js';
+import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS } from '../../shared/const';
+import { ForbiddenError } from '../../shared/_core/errors';
 import axios, { type AxiosInstance } from "axios";
 import { parse as parseCookieHeader } from "cookie";
 import type { Request } from "express";
 import { SignJWT, jwtVerify } from "jose";
-import type { User } from '../../drizzle/schema.js';
-import * as db from '../db.js';
-import { ENV } from './env.js';
+import type { User } from '../../drizzle/schema';
+import * as db from '../db';
+import { ENV } from './env';
 
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";

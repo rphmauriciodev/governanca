@@ -13,8 +13,8 @@ import {
   assessmentResults,
   notifications,
   pdfReports,
-} from '../drizzle/schema.js';
-import { ENV } from './_core/env.js';
+} from '../drizzle/schema';
+import { ENV } from './_core/env';
 
 let _db: any = null;
 

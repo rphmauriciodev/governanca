@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
-import { ENV } from './env.js';
+import { ENV } from './env';
 
 export type Role = "system" | "user" | "assistant" | "tool" | "function";
 
