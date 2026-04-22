@@ -1,3 +1,4 @@
+console.log("[Server] Arquivo api/index.ts carregado com sucesso!");
 import express from "express";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from '../server/_core/oauth';

@@ -1,11 +1,10 @@
 {
   "name": "ti_maturity_assessment",
   "version": "1.0.0",
-  "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "vite build && ncc build api/index.ts -e mysql2 --transpile-only -o api",
+    "build": "vite build && ncc build api/index.ts --transpile-only -o api",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
