@@ -65,4 +65,8 @@ async function startServer() {
   });
 }
 
-startServer().catch(console.error);
+// Export for Vercel
+export const appInstance = startServer();
+if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+  startServer().catch(console.error);
+}

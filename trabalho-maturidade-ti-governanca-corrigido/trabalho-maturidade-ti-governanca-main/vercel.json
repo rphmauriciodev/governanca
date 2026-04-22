@@ -2,25 +2,22 @@
   "version": 2,
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
-  "framework": "vite",
-  "env": {
-    "NODE_ENV": "production"
-  },
+  "outputDirectory": "dist",
   "functions": {
     "server/_core/index.ts": {
       "runtime": "nodejs20.x",
-      "memory": 3008,
+      "memory": 1024,
       "maxDuration": 60
     }
   },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/dist/index.js"
+      "dest": "server/_core/index.ts"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/client/index.html"
+      "dest": "/$1"
     }
   ]
 }
