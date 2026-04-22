@@ -7,7 +7,7 @@ import { ENV } from './env';
 
 export function registerOAuthRoutes(app: any) {
   // Rota para iniciar o login com Google
-  app.get("/api/auth/google", (req: Request, res: Response) => {
+  app.get(["/api/auth/google", "/auth/google"], (req: Request, res: Response) => {
     const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
     const options = {
       redirect_uri: ENV.googleRedirectUri,
@@ -26,7 +26,7 @@ export function registerOAuthRoutes(app: any) {
   });
 
   // Rota de callback do Google
-  app.get("/api/oauth/callback", async (req: Request, res: Response) => {
+  app.get(["/api/oauth/callback", "/oauth/callback"], async (req: Request, res: Response) => {
     const code = req.query.code as string;
 
     if (!code) {

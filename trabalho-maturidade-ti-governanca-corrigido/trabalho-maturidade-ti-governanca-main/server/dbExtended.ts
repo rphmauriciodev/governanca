@@ -170,8 +170,8 @@ export async function saveAssessmentToHistory(
   assessmentId: number,
   overallScore: number,
   overallMaturityLevel: number,
-  categoryScores: Record<number, number>,
-  categoryMaturityLevels: Record<number, number>
+  categoryScores: Record<string | number, number>,
+  categoryMaturityLevels: Record<string | number, number>
 ) {
   const db = await getDb();
   if (!db) throw new Error("Database not configured");

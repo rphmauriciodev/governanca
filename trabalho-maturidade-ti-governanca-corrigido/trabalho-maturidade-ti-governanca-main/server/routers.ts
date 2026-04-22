@@ -766,8 +766,8 @@ export const appRouter = router({
           assessmentId: z.number(),
           overallScore: z.number(),
           overallMaturityLevel: z.number(),
-          categoryScores: z.record(z.number()),
-          categoryMaturityLevels: z.record(z.number()),
+          categoryScores: z.object({}).catchall(z.number()),
+          categoryMaturityLevels: z.object({}).catchall(z.number()),
         })
       )
       .mutation(async ({ input }) => {
@@ -777,8 +777,8 @@ export const appRouter = router({
             input.assessmentId,
             input.overallScore,
             input.overallMaturityLevel,
-            input.categoryScores,
-            input.categoryMaturityLevels
+            input.categoryScores as Record<string | number, number>,
+            input.categoryMaturityLevels as Record<string | number, number>
           );
           return { success: true };
         } catch (error) {

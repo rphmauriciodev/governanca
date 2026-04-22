@@ -7,9 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Download, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 
-// @ts-ignore - html2pdf doesn't have types sometimes
-import html2pdf from "html2pdf.js";
-
 interface GeneratePDFPageProps {
   assessmentId: number;
 }
@@ -55,7 +52,7 @@ export default function GeneratePDFPage({ assessmentId }: GeneratePDFPageProps) 
     setIsGenerating(true);
     try {
       const response = await generatePDFMutation.mutateAsync({ assessmentId });
-      
+
       // Abre uma nova janela/aba com o conteúdo do relatório
       const printWindow = window.open("", "_blank");
       if (!printWindow) {
@@ -73,7 +70,7 @@ export default function GeneratePDFPage({ assessmentId }: GeneratePDFPageProps) 
         // Opcional: fecha a janela após a impressão/cancelamento
         // printWindow.close();
       }, 500);
-      
+
       toast.success("Relatório preparado para impressão/PDF!");
     } catch (error: any) {
       console.error("Erro ao preparar PDF:", error);

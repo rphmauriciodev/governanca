@@ -10,7 +10,7 @@ import { sdk } from './sdk';
  */
 export function registerLocalAuthRoutes(app: any) {
   // Rota de login local via POST
-  app.post("/api/auth/login", async (req: Request, res: Response) => {
+  app.post(["/api/auth/login", "/auth/login"], async (req: Request, res: Response) => {
     const { email, password } = req.body as { email?: string; password?: string };
 
     if (!email || !password) {
@@ -57,7 +57,7 @@ export function registerLocalAuthRoutes(app: any) {
   });
 
   // Rota de página de login (GET) - redireciona para a home com parâmetro
-  app.get("/api/oauth/login", (_req: Request, res: Response) => {
+  app.get(["/api/oauth/login", "/oauth/login"], (_req: Request, res: Response) => {
     res.redirect("/?login=true");
   });
 }

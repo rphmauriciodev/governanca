@@ -17,6 +17,7 @@ export async function generateAssessmentPDF(input: PDFGenerationInput): Promise<
   url: string;
   fileName: string;
   llmAnalysis: string;
+  htmlContent: string;
 }> {
   const assessment = await getAssessmentById(input.assessmentId);
   const result = await getAssessmentResult(input.assessmentId);

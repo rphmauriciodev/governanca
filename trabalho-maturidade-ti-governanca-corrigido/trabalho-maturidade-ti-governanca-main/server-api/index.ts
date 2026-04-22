@@ -17,7 +17,7 @@ async function getApp() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
   // Rota de teste para ver se o servidor ligou
-  app.get("/api/health", (req, res) => {
+  app.get(["/api/health", "/health"], (req, res) => {
     res.json({ 
       status: "ok", 
       message: "Servidor ativo!",
@@ -32,7 +32,7 @@ async function getApp() {
 
   // tRPC API
   app.use(
-    "/api/trpc",
+    ["/api/trpc", "/trpc"],
     createExpressMiddleware({
       router: appRouter,
       createContext,
@@ -48,7 +48,7 @@ async function getApp() {
       error: "Rota não encontrada no Express", 
       method: req.method, 
       url: req.url,
-      registered_routes: ["/api/health", "/api/trpc", "/api/auth/login", "/api/auth/google"]
+      registered_routes: ["/api/health", "/api/trpc", "/api/auth/login", "/api/auth/google", "/health", "/trpc", "/auth/login", "/auth/google"]
     });
   });
 

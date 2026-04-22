@@ -155,7 +155,7 @@ function vitePluginManusDebugCollector(): Plugin {
 }
 
 import { createRequire } from "module";
-const _require = require;
+const _require = createRequire(import.meta.url);
 let manusRuntimePlugin: Plugin | null = null;
 try {
   // vite-plugin-manus-runtime is only available on the Manus platform
