@@ -20,18 +20,29 @@ let _db: any = null;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
+  if (!_db) {
+    const dbUrl = process.env.DATABASE_URL;
+    
+    if (!dbUrl) {
+      console.error("[Database] CRITICAL: DATABASE_URL is not defined in environment variables!");
+      return null;
+    }
+
     try {
-      // Configuração para suportar SSL em bancos na nuvem (Aiven, TiDB, etc)
+      console.log("[Database] Connecting to database... (URL length:", dbUrl.length, ")");
+      
       const pool = mysql.createPool({
-        uri: process.env.DATABASE_URL,
+        uri: dbUrl,
         ssl: {
           rejectUnauthorized: false
-        }
+        },
+        connectionLimit: 1, // Economiza conexões na Vercel
       });
+      
       _db = drizzle(pool);
+      console.log("[Database] Connection pool created successfully.");
     } catch (error) {
-      console.error("[Database] Failed to connect:", error);
+      console.error("[Database] CONNECTION ERROR:", error);
       _db = null;
     }
   }
