@@ -1,6 +1,7 @@
 import { eq, and } from "drizzle-orm";
 import { desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 import {
   InsertUser,
   users,
@@ -15,15 +16,22 @@ import {
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
-let _db: ReturnType<typeof drizzle> | null = null;
+let _db: any = null;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      // Configuração para suportar SSL em bancos na nuvem (Aiven, TiDB, etc)
+      const pool = mysql.createPool({
+        uri: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+      });
+      _db = drizzle(pool);
     } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
+      console.error("[Database] Failed to connect:", error);
       _db = null;
     }
   }

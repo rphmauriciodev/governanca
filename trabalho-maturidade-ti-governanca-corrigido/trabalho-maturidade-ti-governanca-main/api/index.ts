@@ -27,8 +27,8 @@ async function getApp() {
     })
   );
   
-  // No Vercel, o frontend é servido via rewrites no vercel.json
-  // mas mantemos o fallback se necessário
+  // No Vercel, o frontend é servido nativamente via vercel.json.
+  // Só servimos estáticos se NÃO estivermos na Vercel.
   if (process.env.NODE_ENV !== "development" && !process.env.VERCEL) {
     serveStatic(app);
   }
