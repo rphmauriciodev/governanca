@@ -39,6 +39,18 @@ async function getApp() {
   );
 
   appCache = app;
+
+  // Debug: capturar rotas que não batem com nada
+  app.use((req, res) => {
+    console.log(`[Express] Rota não encontrada: ${req.method} ${req.url}`);
+    res.status(404).json({ 
+      error: "Rota não encontrada no Express", 
+      method: req.method, 
+      url: req.url,
+      registered_routes: ["/api/health", "/api/trpc", "/api/auth/login", "/api/auth/google"]
+    });
+  });
+
   return app;
 }
 
