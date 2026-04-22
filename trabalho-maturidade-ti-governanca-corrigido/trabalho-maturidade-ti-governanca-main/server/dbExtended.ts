@@ -17,7 +17,7 @@ export async function saveAIRecommendationsAndGaps(
   gaps: any,
   targetMaturityLevel: number = 5
 ) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db
@@ -34,7 +34,7 @@ export async function saveAIRecommendationsAndGaps(
  * Get AI recommendations and gaps for an assessment
  */
 export async function getAIRecommendationsAndGaps(assessmentId: number) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   const result = await db
@@ -71,7 +71,7 @@ export async function createActionPlan(input: {
   how_much?: number;
   priority?: "baixa" | "media" | "alta" | "critica";
 }) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db.insert(actionPlans).values({
@@ -93,7 +93,7 @@ export async function createActionPlan(input: {
  * Get action plans for an assessment
  */
 export async function getActionPlansByAssessmentId(assessmentId: number) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db
@@ -110,7 +110,7 @@ export async function updateActionPlanStatus(
   planId: number,
   status: "planejado" | "em_progresso" | "concluido" | "cancelado"
 ) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db
@@ -132,7 +132,7 @@ export async function logUserAccess(input: {
   ipAddress?: string;
   userAgent?: string;
 }) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db.insert(accessLogs).values({
@@ -151,7 +151,7 @@ export async function logUserAccess(input: {
  * Get access logs for a user
  */
 export async function getUserAccessLogs(userId: number, limit: number = 50) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db
@@ -173,7 +173,7 @@ export async function saveAssessmentToHistory(
   categoryScores: Record<number, number>,
   categoryMaturityLevels: Record<number, number>
 ) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db.insert(assessmentHistory).values({
@@ -190,7 +190,7 @@ export async function saveAssessmentToHistory(
  * Get assessment history for a company
  */
 export async function getCompanyAssessmentHistory(companyId: number) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db
@@ -204,7 +204,7 @@ export async function getCompanyAssessmentHistory(companyId: number) {
  * Get categories with COBIT domain information
  */
 export async function getCategoriesWithCobitDomain() {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db.select().from(categories).orderBy(categories.order);
@@ -217,7 +217,7 @@ export async function updateCategoryCobitDomain(
   categoryId: number,
   cobitDomain: string
 ) {
-  const db = getDb();
+  const db = await getDb();
   if (!db) throw new Error("Database not configured");
 
   return await db
