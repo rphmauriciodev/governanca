@@ -5,7 +5,7 @@ import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
 import { ENV } from "./env";
 
-export function registerOAuthRoutes(app: Express) {
+export function registerOAuthRoutes(app: any) {
   // Rota para iniciar o login com Google
   app.get("/api/auth/google", (req: Request, res: Response) => {
     const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";

@@ -8,7 +8,7 @@ import { sdk } from "./sdk";
  * Registra rotas de autenticação local (sem OAuth externo).
  * Permite login com email/senha diretamente no banco de dados.
  */
-export function registerLocalAuthRoutes(app: Express) {
+export function registerLocalAuthRoutes(app: any) {
   // Rota de login local via POST
   app.post("/api/auth/login", async (req: Request, res: Response) => {
     const { email, password } = req.body as { email?: string; password?: string };

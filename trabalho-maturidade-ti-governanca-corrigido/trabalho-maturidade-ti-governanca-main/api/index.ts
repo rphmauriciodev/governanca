@@ -15,6 +15,16 @@ async function getApp() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
+  // Rota de teste para ver se o servidor ligou
+  app.get("/api/health", (req, res) => {
+    res.json({ 
+      status: "ok", 
+      message: "Servidor ativo!",
+      env: process.env.NODE_ENV,
+      db_configured: !!process.env.DATABASE_URL
+    });
+  });
+
   // Rotas de autenticação
   registerOAuthRoutes(app);
   registerLocalAuthRoutes(app);
