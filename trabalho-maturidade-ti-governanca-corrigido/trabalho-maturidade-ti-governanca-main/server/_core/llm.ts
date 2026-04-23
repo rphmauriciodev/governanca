@@ -70,8 +70,8 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
       } catch (error: any) {
         // Tenta novamente em caso de limite de taxa (429) ou serviço ocupado (503)
         if ((error.status === 429 || error.status === 503) && retries > 0) {
-          console.log(`[Gemini] Servidor ocupado (${error.status}), aguardando 15s para tentar novamente... (Tentativas restantes: ${retries})`);
-          await new Promise(resolve => setTimeout(resolve, 15000));
+          console.log(`[Gemini] Servidor ocupado (${error.status}), aguardando 2s para tentar novamente... (Tentativas restantes: ${retries})`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
           return sendMessageWithRetry(msg, retries - 1);
         }
         throw error;

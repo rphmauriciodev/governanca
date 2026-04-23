@@ -49,20 +49,25 @@ export default function GeneratePDFPage({ assessmentId }: GeneratePDFPageProps) 
   }
 
   const handleGeneratePDF = async () => {
+    // Abre a janela IMEDIATAMENTE após o clique do usuário para evitar o bloqueador de pop-ups
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) {
+      toast.error("O bloqueador de pop-ups impediu a abertura do relatório. Por favor, permita pop-ups para este site.");
+      return;
+    }
+
+    // Coloca um carregando na nova janela
+    printWindow.document.write("<html><head><title>Gerando Relatório...</title></head><body style='font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;'><div><h2>Gerando seu relatório...</h2><p>Isso pode levar alguns segundos devido à análise por IA.</p></div></body></html>");
+
     setIsGenerating(true);
     try {
       const response = await generatePDFMutation.mutateAsync({ assessmentId });
-
-      // Abre uma nova janela/aba com o conteúdo do relatório
-      const printWindow = window.open("", "_blank");
-      if (!printWindow) {
-        throw new Error("O bloqueador de pop-ups impediu a abertura do relatório.");
-      }
 
       // Escreve o HTML do relatório na nova janela
       printWindow.document.open();
       printWindow.document.write(response.htmlContent || "");
       printWindow.document.close();
+
 
       // Dá um tempo para o navegador processar o estilo e abre a janela de impressão (Salvar como PDF)
       setTimeout(() => {
